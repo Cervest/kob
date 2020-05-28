@@ -5,7 +5,7 @@ For now, it only handles job arguments, as we commonly want to manually run a jo
 
 To create a single new job from a K8s spec-file, with the args `["one", "two", "three"]`:
 ```
-kob with-args -f path/to/spec.yml arg1 arg2 arg3
+kob with-args -f path/to/spec.yml one two three
 ```
 Args are passed as arguments to the Docker command, they don’t override the command itself.
 
