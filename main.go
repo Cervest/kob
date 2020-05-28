@@ -15,7 +15,12 @@ var usage string = `Usage:
 func main() {
 
 	withArgsCmd := flag.NewFlagSet("with-args", flag.ExitOnError)
-	withArgsFile := withArgsCmd.String("file", "", "Path to Job spec. Spec file must contain a single Job with a single container.")
+
+	var withArgsFile string
+	withArgsDefault := "job.yml"
+	withArgsUsage := "Path to Job spec. Spec file must contain a single Job with a single container."
+	withArgsCmd.StringVar(&withArgsFile, "file", withArgsDefault, withArgsUsage)
+	withArgsCmd.StringVar(&withArgsFile, "f", withArgsDefault, withArgsUsage)
 
 	if len(os.Args) < 2 {
 		fmt.Println(usage)
@@ -25,7 +30,7 @@ func main() {
 	switch os.Args[1] {
 	case "with-args":
 		withArgsCmd.Parse(os.Args[2:])
-		k8s.RunJobWithArgs(*withArgsFile, withArgsCmd.Args())
+		k8s.RunJobWithArgs(withArgsFile, withArgsCmd.Args())
 	default:
 		fmt.Println(usage)
 		os.Exit(1)
